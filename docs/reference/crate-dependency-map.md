@@ -1,6 +1,6 @@
 # Crate 依赖关系图
 
-Scenix 保持依赖方向分层和显式。
+scenekit 保持依赖方向分层和显式。
 
 ```text
 scenekit facade

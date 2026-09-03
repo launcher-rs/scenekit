@@ -10,7 +10,7 @@
 
 ## 相关功能标志
 
-启用 `animato`。Scenix v1.5.0 目标为 Animato `1.7.0`，包括过程式缓动/弹簧桥接和基于剪辑的动画运行时。
+启用 `animato`。scenekit v0.1.0 目标为 Animato `1.7.0`，包括过程式缓动/弹簧桥接和基于剪辑的动画运行时。
 
 ## 关键规则
 
@@ -22,9 +22,9 @@
 ## 示例
 
 ```rust
-use scenekit::{NodeAnimationTarget, NodeAnimator, ScenixAnimationDriver, Vec3, Vec3Track};
+use scenekit::{NodeAnimationTarget, NodeAnimator, scenekitAnimationDriver, Vec3, Vec3Track};
 
-let mut driver = ScenixAnimationDriver::new();
+let mut driver = scenekitAnimationDriver::new();
 driver.add_node(NodeAnimator::new(
     scenekit::NodeId::new(1),
     NodeAnimationTarget::Translation(Vec3Track::tween(

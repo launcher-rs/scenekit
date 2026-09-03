@@ -2,7 +2,7 @@
 
 ## 使用场景
 
-当你需要此行为在应用程序中并想要支持它的最小 Scenix 子系统集时。
+当你需要此行为在应用程序中并想要支持它的最小 scenekit 子系统集时。
 
 ## 方法
 
@@ -11,7 +11,7 @@
 ## 示例
 
 ```toml
-scenekit-loader = { version = "1", features = ["http"] }
+scenekit-loader = { version = "0.1", features = ["http"] }
 ```
 
 ## 验证

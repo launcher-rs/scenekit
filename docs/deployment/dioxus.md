@@ -2,12 +2,12 @@
 
 ## 使用场景
 
-使用 Scenix 作为场景/数据层，并根据 Dioxus 目标和 WebGPU 可用性集成渲染。
+使用 scenekit 作为场景/数据层，并根据 Dioxus 目标和 WebGPU 可用性集成渲染。
 
 ## 命令或配置
 
 ```toml
-scenekit = { version = "1", features = ["wasm"] }
+scenekit = { version = "0.1", features = ["wasm"] }
 ```
 
 ## 注意事项

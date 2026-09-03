@@ -22,9 +22,9 @@
 ## 示例
 
 ```rust
-use scenekit::ScenixError;
+use scenekit::scenekitError;
 
-fn report(error: ScenixError) {
+fn report(error: scenekitError) {
     eprintln!("scenekit error: {error}");
 }
 ```

@@ -2,12 +2,12 @@
 
 ## 使用场景
 
-正常使用 Scenix CPU crate，并将渲染器/WASM 决策与 Tauri 窗口策略集成。
+正常使用 scenekit CPU crate，并将渲染器/WASM 决策与 Tauri 窗口策略集成。
 
 ## 命令或配置
 
 ```toml
-scenekit = { version = "1", features = ["renderer"] }
+scenekit = { version = "0.1", features = ["renderer"] }
 ```
 
 ## 注意事项

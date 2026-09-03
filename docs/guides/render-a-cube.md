@@ -20,7 +20,7 @@
 ```rust
 use scenekit::{PerspectiveCamera, Renderer, RendererConfig, Vec3};
 
-# async fn run(scene: &scenekit::SceneGraph) -> Result<(), scenekit::ScenixError> {
+# async fn run(scene: &scenekit::SceneGraph) -> Result<(), scenekit::scenekitError> {
 let mut renderer = Renderer::headless(RendererConfig::new(512, 512)).await?;
 let camera = PerspectiveCamera::new(60.0, 1.0, 0.1, 100.0)
     .position(Vec3::new(0.0, 0.0, 4.0))

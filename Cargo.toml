@@ -1,5 +1,5 @@
 [workspace]
-resolver = "2"
+resolver = "3"
 members = [
     "crates/scenekit-math",
     "crates/scenekit-core",
@@ -24,8 +24,8 @@ members = [
 version = "0.1.0"
 edition = "2024"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/launcher-rs/scenekit"
-authors = ["Aarambh Dev Hub", "launcher-rs"]
+repository = "https://github.com/scenekit/scenekit"
+authors = ["Aarambh Dev Hub", "scenekit"]
 rust-version = "1.89"
 readme = "README.md"
 

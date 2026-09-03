@@ -1,6 +1,6 @@
-# Scenix 开发者文档
+# scenekit 开发者文档
 
-Scenix v1.5.0 是一个模块化的 Rust 原生 3D 场景工作区。本文档为需要选择 crate、创建场景、添加交互/编辑器原语、渲染或加载资源、集成 Animato、目标 WASM 和调试性能的应用开发者编写。
+scenekit v0.1.0 是一个模块化的 Rust 原生 3D 场景工作区。本文档为需要选择 crate、创建场景、添加交互/编辑器原语、渲染或加载资源、集成 Animato、目标 WASM 和调试性能的应用开发者编写。
 
 ## 从这里开始
 
@@ -54,9 +54,7 @@ Scenix v1.5.0 是一个模块化的 Rust 原生 3D 场景工作区。本文档�
 - [实践方案](recipes/README.md)
 - [性能](performance/README.md)
 - [部署](deployment/README.md)
-- [迁移](migration/from-0.9-to-1.0.md)
 - [参考](reference/feature-matrix.md)
-- [v1.5.0 发布说明](../.github/release-notes/1.5.0.md)
 
 ## 功能标志一览
 

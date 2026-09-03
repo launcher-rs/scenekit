@@ -23,7 +23,7 @@ use scenekit::AssetManager;
 let mut manager = AssetManager::new();
 let package = manager.load_file("scene.gltf")?;
 println!("meshes: {}", package.meshes.len());
-# Ok::<(), scenekit::ScenixError>(())
+# Ok::<(), scenekit::scenekitError>(())
 ```
 
 当只需要旧的 `GltfAsset` 形状时使用 `GltfLoader::load_file`。

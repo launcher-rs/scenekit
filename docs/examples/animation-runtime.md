@@ -2,7 +2,7 @@
 
 ## 目的
 
-通过 `AnimationMixer` 播放、循环和交叉淡入淡出基于剪辑的动画，这是过程式 `ScenixAnimationDriver` 的基于剪辑的对应物。
+通过 `AnimationMixer` 播放、循环和交叉淡入淡出基于剪辑的动画，这是过程式 `scenekitAnimationDriver` 的基于剪辑的对应物。
 
 ## 源码
 
@@ -27,5 +27,4 @@ cargo run -p scenekit --example animation_runtime --features animato,scene
 ## 相关文档
 
 - [示例索引](README.md)
-- [v1.4.0 发布](../release-v1.4.0.md)
 - [功能标志](../concepts/feature-flags.md)

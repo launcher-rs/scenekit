@@ -1,6 +1,6 @@
 # 安装
 
-本页说明了依赖 Scenix v1.5.0 的支持方式。对于应用程序代码使用外观 crate，对于构建库或非常小的工具时使用专注的 crate。
+本页说明了依赖 scenekit v0.1.0 的支持方式。对于应用程序代码使用外观 crate，对于构建库或非常小的工具时使用专注的 crate。
 
 ## 外观安装
 
@@ -15,13 +15,13 @@ scenekit = "1"
 
 ```toml
 [dependencies]
-scenekit = { version = "1", features = ["loader"] }
-scenekit = { version = "1", features = ["renderer"] }
-scenekit = { version = "1", features = ["renderer", "post"] }
-scenekit = { version = "1", features = ["animato"] }
-scenekit = { version = "1", features = ["wasm"] }
-scenekit = { version = "1", features = ["interaction"] }
-scenekit = { version = "1", features = ["editor", "egui"] }
+scenekit = { version = "0.1", features = ["loader"] }
+scenekit = { version = "0.1", features = ["renderer"] }
+scenekit = { version = "0.1", features = ["renderer", "post"] }
+scenekit = { version = "0.1", features = ["animato"] }
+scenekit = { version = "0.1", features = ["wasm"] }
+scenekit = { version = "0.1", features = ["interaction"] }
+scenekit = { version = "0.1", features = ["editor", "egui"] }
 ```
 
 ## 选定的 Crate
@@ -41,10 +41,10 @@ scenekit-raycaster = "1"
 
 ```toml
 [dependencies]
-scenekit-math = { version = "1", default-features = false, features = ["libm"] }
-scenekit-core = { version = "1", default-features = false }
-scenekit-scene = { version = "1", default-features = false }
-scenekit-camera = { version = "1", default-features = false }
+scenekit-math = { version = "0.1", default-features = false, features = ["libm"] }
+scenekit-core = { version = "0.1", default-features = false }
+scenekit-scene = { version = "0.1", default-features = false }
+scenekit-camera = { version = "0.1", default-features = false }
 ```
 
 加载器、渲染器、后处理和 WASM 路径面向 `std`。

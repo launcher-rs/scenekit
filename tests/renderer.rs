@@ -261,7 +261,10 @@ fn material_uniform_bytes_are_stable_size() {
         pbr.to_uniform_bytes().len(),
         core::mem::size_of::<MaterialUniform>()
     );
-    assert_eq!(pbr.pipeline_key().shader, scenekit_material::ShaderKind::Pbr);
+    assert_eq!(
+        pbr.pipeline_key().shader,
+        scenekit_material::ShaderKind::Pbr
+    );
 }
 
 #[test]

@@ -1,6 +1,6 @@
 # 快速入门
 
-当你刚接触 Scenix 并想创建场景而无需预先选择每个子系统时，请使用此页面。默认外观为你提供 CPU 场景创作、相机、几何体、材质、灯光、纹理、光线投射和辅助工具。
+当你刚接触 scenekit 并想创建场景而无需预先选择每个子系统时，请使用此页面。默认外观为你提供 CPU 场景创作、相机、几何体、材质、灯光、纹理、光线投射和辅助工具。
 
 ## 安装
 
@@ -12,11 +12,11 @@ scenekit = "1"
 仅在需要时添加更重的系统：
 
 ```toml
-scenekit = { version = "1", features = ["renderer"] }
-scenekit = { version = "1", features = ["loader", "renderer"] }
-scenekit = { version = "1", features = ["renderer", "post"] }
-scenekit = { version = "1", features = ["animato"] }
-scenekit = { version = "1", features = ["wasm"] }
+scenekit = { version = "0.1", features = ["renderer"] }
+scenekit = { version = "0.1", features = ["loader", "renderer"] }
+scenekit = { version = "0.1", features = ["renderer", "post"] }
+scenekit = { version = "0.1", features = ["animato"] }
+scenekit = { version = "0.1", features = ["wasm"] }
 ```
 
 ## 第一个场景

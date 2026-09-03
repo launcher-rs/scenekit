@@ -19,7 +19,10 @@ fn stable_default_facade_exports_raycasting_and_helpers() {
 fn stable_facade_exports_renderer_material_registration_api() {
     let mut gpu_scene = scenekit::GpuScene::new();
     gpu_scene
-        .register_physical_material(scenekit::MaterialId::new(1), &scenekit::PhysicalMaterial::new())
+        .register_physical_material(
+            scenekit::MaterialId::new(1),
+            &scenekit::PhysicalMaterial::new(),
+        )
         .unwrap();
     gpu_scene
         .register_toon_material(scenekit::MaterialId::new(2), &scenekit::ToonMaterial::new())
@@ -31,7 +34,10 @@ fn stable_facade_exports_renderer_material_registration_api() {
         )
         .unwrap();
     gpu_scene
-        .register_normal_material(scenekit::MaterialId::new(4), &scenekit::NormalMaterial::new())
+        .register_normal_material(
+            scenekit::MaterialId::new(4),
+            &scenekit::NormalMaterial::new(),
+        )
         .unwrap();
 
     assert_eq!(gpu_scene.material_count(), 4);

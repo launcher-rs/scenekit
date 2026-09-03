@@ -370,10 +370,7 @@ fn diagnostic_package_for_extension(
             ),
             AssetFormatSupport::DiagnosticOnly => AssetDiagnostic::unsupported(
                 "asset.loader.diagnostic_only",
-                format!(
-                    "{} 已识别但需要外部转换器",
-                    info.name
-                ),
+                format!("{} 已识别但需要外部转换器", info.name),
             ),
         };
         package.diagnostics.push(diagnostic);

@@ -37,7 +37,7 @@ jobs:
         with:
           version: "v0.21.14"
 
-      - name: Build Scenix website
+      - name: Build scenekit website
         working-directory: website
         env:
           NO_COLOR: "false"

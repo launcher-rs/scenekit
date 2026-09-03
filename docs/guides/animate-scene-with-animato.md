@@ -18,9 +18,9 @@
 ## 示例
 
 ```rust
-use scenekit::{NodeAnimationTarget, NodeAnimator, ScenixAnimationDriver, Vec3, Vec3Track};
+use scenekit::{NodeAnimationTarget, NodeAnimator, scenekitAnimationDriver, Vec3, Vec3Track};
 
-let mut driver = ScenixAnimationDriver::new();
+let mut driver = scenekitAnimationDriver::new();
 driver.add_node(NodeAnimator::new(
     scenekit::NodeId::new(1),
     NodeAnimationTarget::Translation(Vec3Track::tween(

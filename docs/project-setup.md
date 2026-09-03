@@ -1,6 +1,6 @@
 # 项目设置
 
-当你开始新的 Scenix 应用程序或示例时，请使用此页面。推荐的布局将 CPU 场景数据与 GPU 注册分离，并使可选系统显而易见。
+当你开始新的 scenekit 应用程序或示例时，请使用此页面。推荐的布局将 CPU 场景数据与 GPU 注册分离，并使可选系统显而易见。
 
 ## 推荐布局
 
@@ -19,7 +19,7 @@ my-app/
 
 ```toml
 [dependencies]
-scenekit = { version = "1", features = ["renderer", "post"] }
+scenekit = { version = "0.1", features = ["renderer", "post"] }
 ```
 
 仅在运行时解码资产时使用 `loader`。仅在应用需要动画轨道时使用 `animato`。

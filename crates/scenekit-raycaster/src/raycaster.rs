@@ -266,7 +266,7 @@ fn intersect_geometry(
             );
         }
     } else {
-        for triangle in geometry.indices.chunks_exact(3) {
+        for triangle in geometry.indices.as_chunks::<3>().0 {
             let a = triangle[0] as usize;
             let b = triangle[1] as usize;
             let c = triangle[2] as usize;

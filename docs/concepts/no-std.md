@@ -22,8 +22,8 @@
 ## 示例
 
 ```toml
-scenekit-math = { version = "1", default-features = false, features = ["libm"] }
-scenekit-core = { version = "1", default-features = false }
+scenekit-math = { version = "0.1", default-features = false, features = ["libm"] }
+scenekit-core = { version = "0.1", default-features = false }
 ```
 
 ## 相关文档

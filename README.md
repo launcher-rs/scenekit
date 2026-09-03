@@ -2,10 +2,11 @@
 
 > 模块化的 Rust 原生 3D 场景框架，适用于原生和 WASM 应用。
 
-[![CI](https://github.com/launcher-rs/scenekit/actions/workflows/ci.yml/badge.svg)](https://github.com/launcher-rs/scenekit/actions)
-[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
+[![CI](https://github.com/scenekit/scenekit/actions/workflows/ci.yml/badge.svg)](https://github.com/scenekit/scenekit/actions)
 
-scenekit `1.5.0` 是当前的稳定版本。它新增了跨平台控件、触摸/游戏手柄/指针锁定输入、选择与变换原语、可复用 Gizmo、检查器快照、可选 egui 渲染，以及按需 GPU 拾取。CPU 创作默认保持轻量，GPU、浏览器和 UI 路径均为可选启用。
+**版本 0.1.0** - 基于 [scenix](https://github.com/AarambhDevHub/scenix) 修改。
+
+scenekit `0.1.0` 是当前的稳定版本。它新增了跨平台控件、触摸/游戏手柄/指针锁定输入、选择与变换原语、可复用 Gizmo、检查器快照、可选 egui 渲染，以及按需 GPU 拾取。CPU 创作默认保持轻量，GPU、浏览器和 UI 路径均为可选启用。
 
 ## 安装
 
@@ -13,61 +14,61 @@ scenekit `1.5.0` 是当前的稳定版本。它新增了跨平台控件、触摸
 
 ```toml
 [dependencies]
-scenekit = "1"
+scenekit = "0.1"
 ```
 
 仅在需要时启用可选系统：
 
 ```toml
 [dependencies]
-scenekit = { version = "1", features = ["loader"] }
-scenekit = { version = "1", features = ["renderer", "post"] }
-scenekit = { version = "1", features = ["animato"] }
-scenekit = { version = "1", features = ["wasm"] }
-scenekit = { version = "1", features = ["interaction"] }
-scenekit = { version = "1", features = ["editor", "egui"] }
+scenekit = { version = "0.1", features = ["loader"] }
+scenekit = { version = "0.1", features = ["renderer", "post"] }
+scenekit = { version = "0.1", features = ["animato"] }
+scenekit = { version = "0.1", features = ["wasm"] }
+scenekit = { version = "0.1", features = ["interaction"] }
+scenekit = { version = "0.1", features = ["editor", "egui"] }
 ```
 
 可以单独使用功能专注的 crate：
 
 ```toml
 [dependencies]
-scenekit-math = "1"
-scenekit-core = "1"
-scenekit-input = "1"
-scenekit-scene = "1"
-scenekit-camera = "1"
-scenekit-mesh = "1"
-scenekit-material = "1"
-scenekit-light = "1"
-scenekit-texture = "1"
-scenekit-loader = "1"
-scenekit-renderer = "1"
-scenekit-post = "1"
-scenekit-raycaster = "1"
-scenekit-helpers = "1"
-scenekit-animato = "1"
-scenekit-wasm = "1"
+scenekit-math = "0.1"
+scenekit-core = "0.1"
+scenekit-input = "0.1"
+scenekit-scene = "0.1"
+scenekit-camera = "0.1"
+scenekit-mesh = "0.1"
+scenekit-material = "0.1"
+scenekit-light = "0.1"
+scenekit-texture = "0.1"
+scenekit-loader = "0.1"
+scenekit-renderer = "0.1"
+scenekit-post = "0.1"
+scenekit-raycaster = "0.1"
+scenekit-helpers = "0.1"
+scenekit-animato = "0.1"
+scenekit-wasm = "0.1"
 ```
 
 用于 `no_std` CPU 创作：
 
 ```toml
 [dependencies]
-scenekit-math = { version = "1", default-features = false, features = ["libm"] }
-scenekit-core = { version = "1", default-features = false }
-scenekit-input = { version = "1", default-features = false }
-scenekit-scene = { version = "1", default-features = false }
-scenekit-camera = { version = "1", default-features = false }
-scenekit-mesh = { version = "1", default-features = false }
-scenekit-material = { version = "1", default-features = false }
-scenekit-light = { version = "1", default-features = false }
-scenekit-texture = { version = "1", default-features = false }
-scenekit-raycaster = { version = "1", default-features = false }
-scenekit-helpers = { version = "1", default-features = false }
+scenekit-math = { version = "0.1", default-features = false, features = ["libm"] }
+scenekit-core = { version = "0.1", default-features = false }
+scenekit-input = { version = "0.1", default-features = false }
+scenekit-scene = { version = "0.1", default-features = false }
+scenekit-camera = { version = "0.1", default-features = false }
+scenekit-mesh = { version = "0.1", default-features = false }
+scenekit-material = { version = "0.1", default-features = false }
+scenekit-light = { version = "0.1", default-features = false }
+scenekit-texture = { version = "0.1", default-features = false }
+scenekit-raycaster = { version = "0.1", default-features = false }
+scenekit-helpers = { version = "0.1", default-features = false }
 ```
 
-`scenekit-loader`、`scenekit-renderer`、`scenekit-post`、`scenekit-animato` 和 `scenekit-wasm` 是可选的 `std` 路径。`scenekit-animato` 继续支持 Animato `1.7.0`。
+`scenekit-loader`、`scenekit-renderer`、`scenekit-post`、`scenekit-animato` 和 `scenekit-wasm` 是可选的 `std` 路径。`scenekit-animato` 继续支持 Animato `1.4.0`。
 
 ## Feature 标志
 
@@ -82,7 +83,7 @@ scenekit-helpers = { version = "1", default-features = false }
 | `loader` | 否 | 资产包、资产管理器、glTF/GLB 扩展元数据、OBJ/MTL、STL、图像、KTX2、HDR/EXR 加载以及导出器。 |
 | `renderer` | 否 | 基于 `wgpu` 的渲染器，支持 surface/headless 目标。 |
 | `post` | 否 | 全屏后处理管线；需与 `renderer` 配合使用。 |
-| `animato` | 否 | Animato 桥接：过程式补间/弹簧轨迹**以及**基于片段的动画运行时（片段、动作、混合器、循环模式、交叉淡入淡出、叠加混合、标记/事件、灯光/变形目标、重定向、CPU 蒙皮）。目标 Animato `1.7.0`。 |
+| `animato` | 否 | Animato 桥接：过程式补间/弹簧轨迹**以及**基于片段的动画运行时（片段、动作、混合器、循环模式、交叉淡入淡出、叠加混合、标记/事件、灯光/变形目标、重定向、CPU 蒙皮）。目标 Animato `1.4.0`。 |
 | `wasm` | 否 | 浏览器 Canvas 封装，优先使用 WebGPU，WebGL2 完整回退，WebGL1 精简回退，并包含生成的演示场景。 |
 | `serde` | 否 | 在功能专注的 crate 支持时提供序列化支持。 |
 
@@ -195,7 +196,7 @@ println!("meshes={}, textures={}", uploaded.meshes, uploaded.textures);
 
 ### 动画运行时
 
-v1.4.0 的 `AnimationMixer` 在 Animato 之上播放基于片段的动画：
+`AnimationMixer` 在 Animato 之上播放基于片段的动画：
 
 ```rust
 use scenekit::{
@@ -260,7 +261,7 @@ assert!(raycaster.cast_ray(ray, &scene, &meshes).is_some());
 
 | Crate | 角色 |
 | --- | --- |
-| `scenekit` | 门面 crate，提供稳定的 v1 feature 标志。 |
+| `scenekit` | 门面 crate，提供稳定的 feature 标志。 |
 | `scenekit-math` | `no_std` 向量、矩阵、四元数、变换、射线和包围盒。 |
 | `scenekit-core` | ID、颜色、错误类型和共享 trait。 |
 | `scenekit-input` | 指针、键盘、触摸、手势、游戏手柄、指针锁定和视口状态。 |
@@ -353,7 +354,7 @@ cargo check -p scenekit --no-default-features --features editor
 cargo check -p scenekit --no-default-features --features egui
 cargo check -p scenekit-wasm --target wasm32-unknown-unknown --all-features
 cargo check --manifest-path examples/wasm_viewer/Cargo.toml --target wasm32-unknown-unknown
-SCENIX_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer -p scenekit-post --all-features
+SCENEKIT_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer -p scenekit-post --all-features
 RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 cargo bench --workspace --no-run
 cargo llvm-cov --workspace --all-features
@@ -375,11 +376,7 @@ cargo llvm-cov --workspace --all-features
 - [实用技巧](./docs/recipes/README.md)
 - [性能优化](./docs/performance/README.md)
 - [部署](./docs/deployment/README.md)
-- [迁移指南](./docs/migration/from-0.9-to-1.0.md)
 - [参考资料](./docs/reference/feature-matrix.md)
-- [v1.5.0 发布说明](./.github/release-notes/1.5.0.md)
-- [v1.4.0 发布说明](./.github/release-notes/1.4.0.md)
-- [v1.3.0 发布说明](./.github/release-notes/v1.3.0.md)
 
 ## 已知限制
 
@@ -396,3 +393,7 @@ cargo llvm-cov --workspace --all-features
 
 - Apache License, Version 2.0
 - MIT license
+
+## 致谢
+
+本项目基于 [scenix](https://github.com/AarambhDevHub/scenix) 修改，原项目由 AarambhDevHub 开发。

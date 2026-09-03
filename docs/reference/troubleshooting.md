@@ -9,7 +9,7 @@
 仅在配置的后端上运行 GPU 测试：
 
 ```sh
-SCENIX_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer -p scenekit-post --all-features
+scenekit_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer -p scenekit-post --all-features
 ```
 
 ## 加载器无法解码资产

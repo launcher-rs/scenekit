@@ -12,7 +12,7 @@
 
 ```sh
 cargo bench --workspace --no-run
-SCENIX_RUN_GPU_BENCHES=1 cargo bench -p scenekit-post
+scenekit_RUN_GPU_BENCHES=1 cargo bench -p scenekit-post
 ```
 
 ## 实际检查

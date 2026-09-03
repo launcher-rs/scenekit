@@ -98,11 +98,13 @@ fn camera_animator_updates_perspective_and_orthographic_stores() {
     .unwrap();
     CameraAnimator::new(
         ortho_id,
-        CameraAnimationTarget::OrthographicBounds(scenekit_animato::OrthographicBoundsTrack::tween(
-            scenekit_animato::OrthographicBounds::new(-1.0, 1.0, -1.0, 1.0),
-            scenekit_animato::OrthographicBounds::new(-2.0, 2.0, -3.0, 3.0),
-            1.0,
-        )),
+        CameraAnimationTarget::OrthographicBounds(
+            scenekit_animato::OrthographicBoundsTrack::tween(
+                scenekit_animato::OrthographicBounds::new(-1.0, 1.0, -1.0, 1.0),
+                scenekit_animato::OrthographicBounds::new(-2.0, 2.0, -3.0, 3.0),
+                1.0,
+            ),
+        ),
     )
     .update(1.0, &mut stores)
     .unwrap();

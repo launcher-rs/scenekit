@@ -1037,7 +1037,7 @@ fn flatten_by_face(geometry: &mut Geometry) {
     geometry.uvs.clear();
     geometry.indices.clear();
 
-    for triangle in old_indices.chunks_exact(3) {
+    for triangle in old_indices.as_chunks::<3>().0 {
         let a = triangle[0] as usize;
         let b = triangle[1] as usize;
         let c = triangle[2] as usize;

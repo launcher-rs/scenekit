@@ -1,6 +1,6 @@
 # 快速开始
 
-当你想要可复制的最常见 Scenix 任务代码时，请使用此页面。除非专注的 crate 更合适，否则代码片段使用 `scenekit` 外观 crate。
+当你想要可复制的最常见 scenekit 任务代码时，请使用此页面。除非专注的 crate 更合适，否则代码片段使用 `scenekit` 外观 crate。
 
 ## 创建场景
 
@@ -44,13 +44,13 @@ let ray = Raycaster::from_camera_ndc(&camera, Vec2::ZERO);
 首先启用 `renderer`：
 
 ```toml
-scenekit = { version = "1", features = ["renderer"] }
+scenekit = { version = "0.1", features = ["renderer"] }
 ```
 
 ```rust
 use scenekit::{PerspectiveCamera, Renderer, RendererConfig, Vec3};
 
-# async fn run(scene: &scenekit::SceneGraph) -> Result<(), scenekit::ScenixError> {
+# async fn run(scene: &scenekit::SceneGraph) -> Result<(), scenekit::scenekitError> {
 let mut renderer = Renderer::headless(RendererConfig::new(512, 512)).await?;
 let camera = PerspectiveCamera::new(60.0, 1.0, 0.1, 100.0)
     .position(Vec3::new(0.0, 0.0, 4.0))
@@ -65,13 +65,13 @@ renderer.render(scene, &camera)?;
 首先启用 `animato`：
 
 ```toml
-scenekit = { version = "1", features = ["animato"] }
+scenekit = { version = "0.1", features = ["animato"] }
 ```
 
 ```rust
-use scenekit::{NodeAnimationTarget, NodeAnimator, ScenixAnimationDriver, Vec3, Vec3Track};
+use scenekit::{NodeAnimationTarget, NodeAnimator, scenekitAnimationDriver, Vec3, Vec3Track};
 
-let mut driver = ScenixAnimationDriver::new();
+let mut driver = scenekitAnimationDriver::new();
 driver.add_node(NodeAnimator::new(
     scenekit::NodeId::new(1),
     NodeAnimationTarget::Translation(Vec3Track::tween(

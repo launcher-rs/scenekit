@@ -1,7 +1,0 @@
-[build]
-target = "index.html"
-dist = "dist"
-public_url = "/scenekit/"
-
-[watch]
-watch = ["src", "public", "index.html"]

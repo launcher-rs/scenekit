@@ -11,7 +11,7 @@
 ## 命令或模式
 
 ```toml
-scenekit-scene = { version = "1", default-features = false }
+scenekit-scene = { version = "0.1", default-features = false }
 ```
 
 ## 实际检查

@@ -58,10 +58,7 @@ id_type!(LightId, "光源资源的类型化标识符。");
 id_type!(CameraId, "摄像机资源的类型化标识符。");
 id_type!(AssetId, "导入资产包的类型化标识符。");
 id_type!(SkinId, "导入蒙皮元数据的类型化标识符。");
-id_type!(
-    AnimationClipId,
-    "导入动画片段的类型化标识符。"
-);
+id_type!(AnimationClipId, "导入动画片段的类型化标识符。");
 
 #[cfg(all(test, feature = "std"))]
 mod tests {

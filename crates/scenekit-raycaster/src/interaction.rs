@@ -3,7 +3,9 @@ use alloc::vec::Vec;
 use scenekit_camera::{OrthographicCamera, PerspectiveCamera};
 use scenekit_core::NodeId;
 use scenekit_math::{Aabb, Mat4, Plane, Quat, Ray3, Transform, Vec2, Vec3, Vec4};
-use scenekit_scene::{SceneGraph, SnapSettings, TransformConstraint, TransformMode, TransformSpace};
+use scenekit_scene::{
+    SceneGraph, SnapSettings, TransformConstraint, TransformMode, TransformSpace,
+};
 
 use crate::{GeometryProvider, Raycaster};
 

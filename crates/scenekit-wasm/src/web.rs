@@ -259,11 +259,7 @@ impl WebGlBackendContext {
         }
     }
 
-    fn uniform4fv_with_f32_array(
-        &self,
-        location: Option<&WebGlUniformLocation>,
-        data: &[f32],
-    ) {
+    fn uniform4fv_with_f32_array(&self, location: Option<&WebGlUniformLocation>, data: &[f32]) {
         match self {
             Self::WebGl2(gl) => gl.uniform4fv_with_f32_array(location, data),
             Self::WebGl1(gl) => gl.uniform4fv_with_f32_array(location, data),
@@ -277,12 +273,8 @@ impl WebGlBackendContext {
         data: &[f32],
     ) {
         match self {
-            Self::WebGl2(gl) => {
-                gl.uniform_matrix4fv_with_f32_array(location, transpose, data)
-            }
-            Self::WebGl1(gl) => {
-                gl.uniform_matrix4fv_with_f32_array(location, transpose, data)
-            }
+            Self::WebGl2(gl) => gl.uniform_matrix4fv_with_f32_array(location, transpose, data),
+            Self::WebGl1(gl) => gl.uniform_matrix4fv_with_f32_array(location, transpose, data),
         }
     }
 
@@ -396,7 +388,11 @@ impl WebGlBackendContext {
         }
     }
 
-    fn get_uniform_location(&self, program: &WebGlProgram, name: &str) -> Option<WebGlUniformLocation> {
+    fn get_uniform_location(
+        &self,
+        program: &WebGlProgram,
+        name: &str,
+    ) -> Option<WebGlUniformLocation> {
         match self {
             Self::WebGl2(gl) => gl.get_uniform_location(program, name),
             Self::WebGl1(gl) => gl.get_uniform_location(program, name),
@@ -529,9 +525,7 @@ impl LabRuntime {
             SceneNode::helper("Grid", helper_mesh, helper_id)
                 .transform(Transform::from_translation(Vec3::new(0.0, -0.02, 0.0))),
         );
-        let bbox = helper_group.add(
-            SceneNode::helper("BoundingBox", helper_mesh, helper_id),
-        );
+        let bbox = helper_group.add(SceneNode::helper("BoundingBox", helper_mesh, helper_id));
         let helper_node = scene.add(helper_group);
 
         let mut objects = vec![
@@ -1187,17 +1181,13 @@ fn helper_geometry() -> Geometry {
     let z_color = Color::from_hex(0x4444FF);
 
     positions.extend_from_slice(&[
-        0.0, 0.0, 0.0, axis_len, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, axis_len, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0, axis_len,
+        0.0, 0.0, 0.0, axis_len, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, axis_len, 0.0, 0.0, 0.0, 0.0, 0.0,
+        0.0, axis_len,
     ]);
     colors.extend_from_slice(&[
-        x_color.r, x_color.g, x_color.b, x_color.a,
-        x_color.r, x_color.g, x_color.b, x_color.a,
-        y_color.r, y_color.g, y_color.b, y_color.a,
-        y_color.r, y_color.g, y_color.b, y_color.a,
-        z_color.r, z_color.g, z_color.b, z_color.a,
-        z_color.r, z_color.g, z_color.b, z_color.a,
+        x_color.r, x_color.g, x_color.b, x_color.a, x_color.r, x_color.g, x_color.b, x_color.a,
+        y_color.r, y_color.g, y_color.b, y_color.a, y_color.r, y_color.g, y_color.b, y_color.a,
+        z_color.r, z_color.g, z_color.b, z_color.a, z_color.r, z_color.g, z_color.b, z_color.a,
     ]);
 
     // grid
@@ -1207,13 +1197,10 @@ fn helper_geometry() -> Geometry {
     let mut t = -grid_half;
     while t <= grid_half + 0.001 {
         positions.extend_from_slice(&[
-            t, 0.0, -grid_half, t, 0.0, grid_half,
-            -grid_half, 0.0, t, grid_half, 0.0, t,
+            t, 0.0, -grid_half, t, 0.0, grid_half, -grid_half, 0.0, t, grid_half, 0.0, t,
         ]);
         for _ in 0..8 {
-            colors.extend_from_slice(&[
-                grid_color.r, grid_color.g, grid_color.b, grid_color.a,
-            ]);
+            colors.extend_from_slice(&[grid_color.r, grid_color.g, grid_color.b, grid_color.a]);
         }
         t += grid_step;
     }
@@ -1770,7 +1757,7 @@ impl WebGlRenderer {
             geometry.indices.iter().map(|index| *index as u16).collect()
         };
         let mut line_indices = Vec::with_capacity(indices.len() * 2);
-        for triangle in indices.chunks_exact(3) {
+        for triangle in indices.as_chunks::<3>().0 {
             line_indices.extend_from_slice(&[
                 triangle[0],
                 triangle[1],

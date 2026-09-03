@@ -2,7 +2,7 @@
 
 ## 使用场景
 
-当你需要此行为在应用程序中并想要支持它的最小 Scenix 子系统集时。
+当你需要此行为在应用程序中并想要支持它的最小 scenekit 子系统集时。
 
 ## 方法
 
@@ -11,7 +11,7 @@
 ## 示例
 
 ```sh
-SCENIX_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer --all-features
+scenekit_RUN_GPU_TESTS=1 WGPU_BACKEND=vulkan cargo test -p scenekit-renderer --all-features
 ```
 
 ## 验证

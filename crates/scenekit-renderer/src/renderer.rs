@@ -1,7 +1,9 @@
 use std::collections::HashMap;
 
 use scenekit_camera::PerspectiveCamera;
-use scenekit_core::{GpuError, LightId, MaterialId, MeshId, ScenixError, TextureId, ValidationError};
+use scenekit_core::{
+    GpuError, LightId, MaterialId, MeshId, ScenixError, TextureId, ValidationError,
+};
 use scenekit_light::{
     AmbientLight, AreaLight, DirectionalLight, HemisphereLight, LightProbe, PointLight, SpotLight,
 };
@@ -2103,7 +2105,9 @@ fn read_target_pixel(
         .map_err(|_| ScenixError::Gpu(GpuError::Upload))?
         .map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
 
-    let mapped = slice.get_mapped_range().map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
+    let mapped = slice
+        .get_mapped_range()
+        .map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
     let pixel = [mapped[0], mapped[1], mapped[2], mapped[3]];
     drop(mapped);
     buffer.unmap();

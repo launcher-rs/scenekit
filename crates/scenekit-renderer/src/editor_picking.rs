@@ -401,7 +401,9 @@ impl EditorBuffers {
             .recv()
             .map_err(|_| ScenixError::Gpu(GpuError::Upload))?
             .map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
-        let mapped = slice.get_mapped_range().map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
+        let mapped = slice
+            .get_mapped_range()
+            .map_err(|_| ScenixError::Gpu(GpuError::Upload))?;
         let id = u32::from_le_bytes([mapped[0], mapped[1], mapped[2], mapped[3]]);
         let normal_offset = READBACK_ROW as usize;
         let normal = Vec3::new(

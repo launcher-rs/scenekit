@@ -492,7 +492,8 @@ impl SceneGraph {
             .next_id
             .checked_add(1)
             .expect("scenekit scene graph exhausted node ids");
-        let index = id_index(id).expect("scenekit scene graph node id exceeded platform index size");
+        let index =
+            id_index(id).expect("scenekit scene graph node id exceeded platform index size");
         if self.id_to_key.len() <= index {
             self.id_to_key.resize(index + 1, None);
         }
