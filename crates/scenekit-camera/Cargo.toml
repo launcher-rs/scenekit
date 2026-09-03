@@ -1,0 +1,43 @@
+[package]
+name = "scenekit-camera"
+description = "GPU-free camera, frustum, and controller types for scenekit."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = ["scenekit-core/std", "scenekit-input/std", "scenekit-math/std"]
+serde = ["dep:serde", "scenekit-core/serde", "scenekit-input/serde", "scenekit-math/serde"]
+inspector = ["scenekit-core/inspector"]
+
+[dependencies]
+scenekit-core = { workspace = true }
+scenekit-input = { workspace = true }
+scenekit-math = { workspace = true }
+serde = { workspace = true, optional = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[[bench]]
+name = "camera_bench"
+path = "../../benches/camera_bench.rs"
+harness = false
+
+[[bench]]
+name = "controls_bench"
+path = "../../benches/controls_bench.rs"
+harness = false
+
+[[test]]
+name = "camera"
+path = "../../tests/camera.rs"
+
+[[test]]
+name = "camera_serde"
+path = "../../tests/camera_serde.rs"

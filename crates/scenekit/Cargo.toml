@@ -1,0 +1,276 @@
+[package]
+name = "scenekit"
+description = "Facade crate for the scenekit Renderer APIs."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std", "scene", "camera", "mesh", "material", "light", "texture", "raycaster", "helpers"]
+std = ["scenekit-math/std", "scenekit-core/std", "scenekit-input/std", "scenekit-scene?/std", "scenekit-camera?/std", "scenekit-mesh?/std", "scenekit-material?/std", "scenekit-light?/std", "scenekit-texture?/std", "scenekit-loader?/std", "scenekit-post?/std", "scenekit-renderer?/std", "scenekit-raycaster?/std", "scenekit-helpers?/std", "scenekit-animato?/std", "scenekit-wasm?/std"]
+scene = ["dep:scenekit-scene"]
+camera = ["dep:scenekit-camera"]
+mesh = ["dep:scenekit-mesh"]
+material = ["dep:scenekit-material"]
+light = ["dep:scenekit-light"]
+texture = ["dep:scenekit-texture"]
+loader = ["dep:scenekit-loader"]
+post = ["dep:scenekit-post", "scenekit-renderer?/post"]
+renderer = ["dep:scenekit-renderer"]
+raycaster = ["dep:scenekit-raycaster"]
+helpers = ["dep:scenekit-helpers"]
+interaction = ["scene", "camera", "raycaster", "helpers"]
+editor = [
+    "std",
+    "interaction",
+    "material",
+    "light",
+    "texture",
+    "scenekit-core/inspector",
+    "scenekit-scene/inspector",
+    "scenekit-camera/inspector",
+    "scenekit-material/inspector",
+    "scenekit-light/inspector",
+    "scenekit-texture/inspector",
+    "scenekit-animato?/inspector",
+    "scenekit-renderer?/inspector",
+]
+egui = ["editor", "scenekit-helpers/egui"]
+animato = ["dep:scenekit-animato"]
+wasm = ["dep:scenekit-wasm"]
+libm = ["scenekit-math/libm"]
+serde = ["scenekit-math/serde", "scenekit-core/serde", "scenekit-input/serde", "scenekit-scene?/serde", "scenekit-camera?/serde", "scenekit-mesh?/serde", "scenekit-material?/serde", "scenekit-light?/serde", "scenekit-texture?/serde", "scenekit-loader?/serde", "scenekit-post?/serde", "scenekit-renderer?/serde", "scenekit-raycaster?/serde", "scenekit-helpers?/serde", "scenekit-animato?/serde", "scenekit-wasm?/serde"]
+approx = ["scenekit-math/approx"]
+gpu = ["scenekit-core/gpu"]
+
+[dependencies]
+scenekit-core = { workspace = true }
+scenekit-input = { workspace = true }
+scenekit-math = { workspace = true }
+scenekit-camera = { workspace = true, optional = true }
+scenekit-light = { workspace = true, optional = true }
+scenekit-loader = { workspace = true, optional = true }
+scenekit-material = { workspace = true, optional = true }
+scenekit-mesh = { workspace = true, optional = true }
+scenekit-post = { workspace = true, optional = true }
+scenekit-raycaster = { workspace = true, optional = true }
+scenekit-renderer = { workspace = true, optional = true }
+scenekit-scene = { workspace = true, optional = true }
+scenekit-texture = { workspace = true, optional = true }
+scenekit-helpers = { workspace = true, optional = true }
+scenekit-animato = { workspace = true, optional = true }
+scenekit-wasm = { workspace = true, optional = true }
+
+[dev-dependencies]
+egui = { workspace = true }
+pollster = { workspace = true }
+
+[[test]]
+name = "scenekit_foundation"
+path = "../../tests/scenekit_foundation.rs"
+
+[[test]]
+name = "animation_runtime"
+path = "../../tests/animation_runtime.rs"
+required-features = ["animato", "loader", "scene", "camera", "material", "light", "mesh", "helpers"]
+
+[[example]]
+name = "materials_and_lights"
+path = "../../examples/materials_and_lights.rs"
+required-features = ["scene", "mesh", "material", "light"]
+
+[[example]]
+name = "material_pipeline_keys"
+path = "../../examples/material_pipeline_keys.rs"
+required-features = ["material"]
+
+[[example]]
+name = "light_probe"
+path = "../../examples/light_probe.rs"
+required-features = ["light"]
+
+[[example]]
+name = "textures_and_camera"
+path = "../../examples/textures_and_camera.rs"
+required-features = ["camera", "texture"]
+
+[[example]]
+name = "orbit_camera"
+path = "../../examples/orbit_camera.rs"
+required-features = ["camera"]
+
+[[example]]
+name = "hello_cube"
+path = "../../examples/hello_cube.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material"]
+
+[[example]]
+name = "pbr_sphere"
+path = "../../examples/pbr_sphere.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material", "texture", "light"]
+
+[[example]]
+name = "physical_material"
+path = "../../examples/physical_material.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material"]
+
+[[example]]
+name = "toon_shading"
+path = "../../examples/toon_shading.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material", "texture"]
+
+[[example]]
+name = "shadow_demo"
+path = "../../examples/shadow_demo.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material", "light"]
+
+[[example]]
+name = "gltf_scene"
+path = "../../examples/gltf_scene.rs"
+required-features = ["loader", "renderer", "camera"]
+
+[[example]]
+name = "asset_pipeline"
+path = "../../examples/asset_pipeline.rs"
+required-features = ["loader", "renderer"]
+
+[[example]]
+name = "asset_manager"
+path = "../../examples/asset_manager.rs"
+required-features = ["loader"]
+
+[[example]]
+name = "export_scene"
+path = "../../examples/export_scene.rs"
+required-features = ["loader"]
+
+[[example]]
+name = "animation_import"
+path = "../../examples/animation_import.rs"
+required-features = ["loader"]
+
+[[example]]
+name = "compressed_assets"
+path = "../../examples/compressed_assets.rs"
+required-features = ["loader"]
+
+[[example]]
+name = "post_processing"
+path = "../../examples/post_processing.rs"
+required-features = ["renderer", "post", "scene", "camera", "mesh", "light"]
+
+[[example]]
+name = "raycasting"
+path = "../../examples/raycasting.rs"
+required-features = ["scene", "camera", "mesh", "raycaster"]
+
+[[example]]
+name = "helpers_demo"
+path = "../../examples/helpers_demo.rs"
+required-features = ["helpers", "camera", "light"]
+
+[[example]]
+name = "instanced_mesh"
+path = "../../examples/instanced_mesh.rs"
+required-features = ["mesh"]
+
+[[example]]
+name = "lod_demo"
+path = "../../examples/lod_demo.rs"
+required-features = ["scene"]
+
+[[example]]
+name = "morph_targets"
+path = "../../examples/morph_targets.rs"
+required-features = ["mesh"]
+
+[[example]]
+name = "fog_demo"
+path = "../../examples/fog_demo.rs"
+required-features = ["scene"]
+
+[[example]]
+name = "sprite_particles"
+path = "../../examples/sprite_particles.rs"
+required-features = ["scene"]
+
+[[example]]
+name = "environment_map"
+path = "../../examples/environment_map.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material", "texture"]
+
+[[example]]
+name = "render_target_capture"
+path = "../../examples/render_target_capture.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material"]
+
+[[example]]
+name = "animato_integration"
+path = "../../examples/animato_integration.rs"
+required-features = ["animato", "scene", "camera", "material"]
+
+[[example]]
+name = "animation_runtime"
+path = "../../examples/animation_runtime.rs"
+required-features = ["animato", "scene"]
+
+[[example]]
+name = "animation_mixer"
+path = "../../examples/animation_mixer.rs"
+required-features = ["animato", "scene", "material", "light"]
+
+[[example]]
+name = "skeleton_skinning"
+path = "../../examples/skeleton_skinning.rs"
+required-features = ["mesh", "animato", "renderer"]
+
+[[example]]
+name = "animation_events"
+path = "../../examples/animation_events.rs"
+required-features = ["animato", "scene", "light"]
+
+[[test]]
+name = "scenekit_v08"
+path = "../../tests/scenekit_v08.rs"
+
+[[test]]
+name = "scenekit_v09"
+path = "../../tests/scenekit_v09.rs"
+
+[[test]]
+name = "scenekit_v10"
+path = "../../tests/scenekit_v10.rs"
+
+[[test]]
+name = "scenekit_v15"
+path = "../../tests/scenekit_v15.rs"
+required-features = ["interaction", "mesh"]
+
+[[example]]
+name = "controls_showcase"
+path = "../../examples/controls_showcase.rs"
+required-features = ["camera"]
+
+[[example]]
+name = "selection_and_drag"
+path = "../../examples/selection_and_drag.rs"
+required-features = ["interaction", "mesh"]
+
+[[example]]
+name = "transform_gizmo"
+path = "../../examples/transform_gizmo.rs"
+required-features = ["interaction"]
+
+[[example]]
+name = "editor_inspector"
+path = "../../examples/editor_inspector.rs"
+required-features = ["editor", "egui"]
+
+[[example]]
+name = "renderer_picking"
+path = "../../examples/renderer_picking.rs"
+required-features = ["renderer", "scene", "camera", "mesh", "material"]

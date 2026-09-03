@@ -1,0 +1,39 @@
+[package]
+name = "scenekit-post"
+description = "wgpu post-processing stack and full-screen effects for scenekit."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = ["scenekit-core/std", "scenekit-math/std"]
+serde = ["dep:serde", "scenekit-core/serde", "scenekit-math/serde", "wgpu/serde"]
+
+[dependencies]
+bytemuck = { workspace = true }
+scenekit-core = { workspace = true }
+scenekit-math = { workspace = true }
+serde = { workspace = true, optional = true }
+wgpu = { workspace = true }
+
+[dev-dependencies]
+pollster = { workspace = true }
+serde_json = { workspace = true }
+
+[[bench]]
+name = "post_bench"
+path = "../../benches/post_bench.rs"
+harness = false
+
+[[test]]
+name = "post"
+path = "../../tests/post.rs"
+
+[[test]]
+name = "post_gpu"
+path = "../../tests/post_gpu.rs"

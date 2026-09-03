@@ -1,0 +1,64 @@
+[package]
+name = "scenekit-loader"
+description = "CPU-side asset loaders for glTF, OBJ, STL, image, KTX2, and HDR data."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = [
+    "scenekit-camera/std",
+    "scenekit-core/std",
+    "scenekit-light/std",
+    "scenekit-material/std",
+    "scenekit-math/std",
+    "scenekit-mesh/std",
+    "scenekit-scene/std",
+    "scenekit-texture/std",
+]
+http = ["dep:reqwest", "reqwest/rustls-tls"]
+serde = [
+    "dep:serde",
+    "scenekit-camera/serde",
+    "scenekit-core/serde",
+    "scenekit-light/serde",
+    "scenekit-material/serde",
+    "scenekit-math/serde",
+    "scenekit-mesh/serde",
+    "scenekit-scene/serde",
+    "scenekit-texture/serde",
+]
+
+[dependencies]
+gltf = { workspace = true, features = ["import", "names", "utils", "base64", "image", "urlencoding", "extensions", "KHR_lights_punctual", "KHR_materials_emissive_strength", "KHR_materials_ior", "KHR_materials_pbrSpecularGlossiness", "KHR_materials_specular", "KHR_materials_transmission", "KHR_materials_unlit", "KHR_materials_variants", "KHR_materials_volume", "KHR_texture_transform"] }
+image = { workspace = true, features = ["png", "jpeg", "webp", "tga", "tiff", "hdr", "exr"] }
+ktx2 = { workspace = true }
+reqwest = { workspace = true, optional = true }
+scenekit-camera = { workspace = true }
+scenekit-core = { workspace = true }
+scenekit-light = { workspace = true }
+scenekit-material = { workspace = true }
+scenekit-math = { workspace = true }
+scenekit-mesh = { workspace = true }
+scenekit-scene = { workspace = true }
+scenekit-texture = { workspace = true }
+serde = { workspace = true, optional = true }
+stl_io = { workspace = true }
+tobj = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[[bench]]
+name = "loader_bench"
+path = "../../benches/loader_bench.rs"
+harness = false
+
+[[test]]
+name = "loader"
+path = "../../tests/loader.rs"

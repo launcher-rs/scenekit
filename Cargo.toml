@@ -1,0 +1,79 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/scenekit-math",
+    "crates/scenekit-core",
+    "crates/scenekit-input",
+    "crates/scenekit-scene",
+    "crates/scenekit-camera",
+    "crates/scenekit-mesh",
+    "crates/scenekit-material",
+    "crates/scenekit-light",
+    "crates/scenekit-texture",
+    "crates/scenekit-loader",
+    "crates/scenekit-post",
+    "crates/scenekit-renderer",
+    "crates/scenekit-raycaster",
+    "crates/scenekit-helpers",
+    "crates/scenekit-animato",
+    "crates/scenekit-wasm",
+    "crates/scenekit",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/launcher-rs/scenekit"
+authors = ["Aarambh Dev Hub", "launcher-rs"]
+rust-version = "1.89"
+readme = "README.md"
+
+[workspace.dependencies]
+scenekit-math = { path = "crates/scenekit-math", version = "0.1.0", default-features = false }
+scenekit-core = { path = "crates/scenekit-core", version = "0.1.0", default-features = false }
+scenekit-input = { path = "crates/scenekit-input", version = "0.1.0", default-features = false }
+scenekit-scene = { path = "crates/scenekit-scene", version = "0.1.0", default-features = false }
+scenekit-camera = { path = "crates/scenekit-camera", version = "0.1.0", default-features = false }
+scenekit-mesh = { path = "crates/scenekit-mesh", version = "0.1.0", default-features = false }
+scenekit-material = { path = "crates/scenekit-material", version = "0.1.0", default-features = false }
+scenekit-light = { path = "crates/scenekit-light", version = "0.1.0", default-features = false }
+scenekit-texture = { path = "crates/scenekit-texture", version = "0.1.0", default-features = false }
+scenekit-loader = { path = "crates/scenekit-loader", version = "0.1.0", default-features = false }
+scenekit-post = { path = "crates/scenekit-post", version = "0.1.0", default-features = false }
+scenekit-renderer = { path = "crates/scenekit-renderer", version = "0.1.0", default-features = false }
+scenekit-raycaster = { path = "crates/scenekit-raycaster", version = "0.1.0", default-features = false }
+scenekit-helpers = { path = "crates/scenekit-helpers", version = "0.1.0", default-features = false }
+scenekit-animato = { path = "crates/scenekit-animato", version = "0.1.0", default-features = false }
+scenekit-wasm = { path = "crates/scenekit-wasm", version = "0.1.0", default-features = false }
+
+# Animato remains the value/interpolation engine. v1.5.0 targets Animato 1.7.0
+# (the previous 1.6.0 release gate is resolved; scenekit uses the stable
+# `std`, `tween`, `spring`, and `serde` feature set).
+animato = { version = "1.7.0", default-features = false }
+approx = { version = "0.5", default-features = false }
+bytemuck = { version = "1", default-features = false, features = ["derive"] }
+console_error_panic_hook = { version = "0.1" }
+egui = { version = "=0.33.3", default-features = false, features = ["default_fonts"] }
+gltf = { version = "1.4.1", default-features = false }
+image = { version = "0.25.10", default-features = false }
+js-sys = { version = "0.3" }
+ktx2 = { version = "0.4.0", default-features = false }
+libm = { version = "0.2" }
+pollster = { version = "0.4" }
+raw-window-handle = { version = "0.6" }
+reqwest = { version = "0.12", default-features = false }
+serde = { version = "1", default-features = false, features = ["alloc", "derive"] }
+serde_json = { version = "1" }
+slotmap = { version = "1", default-features = false }
+stl_io = { version = "0.11.0" }
+tobj = { version = "4.0.3", default-features = false }
+wasm-bindgen = { version = "0.2" }
+wasm-bindgen-futures = { version = "0.4" }
+web-sys = { version = "0.3" }
+wgpu = { version = "30.0" }
+winit = { version = "0.30.13" }
+
+[profile.release]
+codegen-units = 1
+lto = "thin"

@@ -1,0 +1,37 @@
+[package]
+name = "scenekit-light"
+description = "GPU-free light types, shadow configuration, and light probes for scenekit."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = ["scenekit-core/std", "scenekit-math/std"]
+serde = ["dep:serde", "scenekit-core/serde", "scenekit-math/serde"]
+inspector = ["scenekit-core/inspector"]
+
+[dependencies]
+scenekit-core = { workspace = true }
+scenekit-math = { workspace = true }
+serde = { workspace = true, optional = true }
+
+[dev-dependencies]
+scenekit-scene = { workspace = true }
+serde_json = { workspace = true }
+
+[[test]]
+name = "light_types"
+path = "../../tests/light_types.rs"
+
+[[test]]
+name = "light_probe"
+path = "../../tests/light_probe.rs"
+
+[[test]]
+name = "light_serde"
+path = "../../tests/light_serde.rs"

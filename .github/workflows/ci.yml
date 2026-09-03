@@ -1,0 +1,204 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  lint-docs-package:
+    name: Lint, docs, package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-features -- -D warnings
+
+      - name: Docs
+        run: cargo doc --workspace --all-features --no-deps
+        env:
+          RUSTDOCFLAGS: "-D warnings"
+
+      - name: Cargo package check
+        run: cargo package --workspace --no-verify
+
+      - name: Check all examples
+        run: cargo check -p scenekit --examples --all-features
+
+      - name: Bench compile
+        run: cargo bench --workspace --no-run
+
+  test:
+    name: Test (${{ matrix.rust }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: [stable, beta, nightly]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust ${{ matrix.rust }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Test default features
+        run: cargo test --workspace
+
+      - name: Test all features
+        run: cargo test --workspace --all-features
+
+      - name: Test no-default CPU crates
+        run: cargo test -p scenekit-math -p scenekit-core -p scenekit-input -p scenekit-scene -p scenekit-camera -p scenekit-mesh -p scenekit-material -p scenekit-light -p scenekit-texture -p scenekit-raycaster -p scenekit-helpers -p scenekit-animato --no-default-features
+
+      - name: Test loader all features
+        run: cargo test -p scenekit-loader --all-features
+
+      - name: Test raycaster and helpers all features
+        run: cargo test -p scenekit-raycaster -p scenekit-helpers --all-features
+
+      - name: Test animato bridge all features
+        run: cargo test -p scenekit-animato --all-features
+
+      - name: Test animation runtime
+        run: cargo test -p scenekit --test animation_runtime --all-features
+
+      - name: Check animation examples
+        run: cargo check -p scenekit --examples --features animato
+
+      - name: Test v1.5 interaction surface
+        run: cargo test -p scenekit --test scenekit_v15 --all-features
+
+      - name: Check v1.5 facade feature lanes
+        run: |
+          cargo check -p scenekit --no-default-features --features interaction
+          cargo check -p scenekit --no-default-features --features editor
+          cargo check -p scenekit --no-default-features --features egui
+
+  msrv:
+    name: Minimum supported Rust 1.89
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust 1.89
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.89"
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check workspace at MSRV
+        run: cargo check --workspace --all-features
+
+  wasm:
+    name: WASM compile
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check scenekit-wasm
+        run: cargo check -p scenekit-wasm --target wasm32-unknown-unknown --all-features
+
+      - name: Check wasm viewer example
+        run: cargo check --manifest-path examples/wasm_viewer/Cargo.toml --target wasm32-unknown-unknown
+
+  website:
+    name: Website build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install Trunk
+        uses: jetli/trunk-action@v0.5.0
+        with:
+          version: "v0.21.14"
+
+      - name: Build website
+        working-directory: website
+        env:
+          NO_COLOR: "false"
+        run: trunk build --release --public-url /scenekit/
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Coverage
+        run: cargo llvm-cov --workspace --all-features
+
+  renderer-gpu:
+    name: Renderer and post GPU smoke (lavapipe)
+    runs-on: ubuntu-latest
+
+    env:
+      SCENIX_RUN_GPU_TESTS: "1"
+      WGPU_BACKEND: vulkan
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install Mesa Vulkan software driver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mesa-vulkan-drivers vulkan-tools
+
+      - name: Test renderer and post GPU paths
+        run: cargo test -p scenekit-renderer -p scenekit-post --all-features

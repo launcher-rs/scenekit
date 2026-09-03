@@ -1,0 +1,72 @@
+[package]
+name = "scenekit-renderer"
+description = "wgpu renderer, GPU scene upload, passes, and frame orchestration for scenekit."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = [
+    "scenekit-camera/std",
+    "scenekit-core/std",
+    "scenekit-light/std",
+    "scenekit-material/std",
+    "scenekit-math/std",
+    "scenekit-mesh/std",
+    "scenekit-scene/std",
+    "scenekit-texture/std",
+    "scenekit-post?/std",
+]
+post = ["dep:scenekit-post"]
+serde = [
+    "dep:serde",
+    "scenekit-camera/serde",
+    "scenekit-core/serde",
+    "scenekit-light/serde",
+    "scenekit-material/serde",
+    "scenekit-math/serde",
+    "scenekit-mesh/serde",
+    "scenekit-post?/serde",
+    "scenekit-scene/serde",
+    "scenekit-texture/serde",
+    "wgpu/serde",
+]
+inspector = ["scenekit-core/inspector"]
+
+[dependencies]
+bytemuck = { workspace = true }
+raw-window-handle = { workspace = true }
+scenekit-camera = { workspace = true }
+scenekit-core = { workspace = true }
+scenekit-light = { workspace = true }
+scenekit-material = { workspace = true }
+scenekit-math = { workspace = true }
+scenekit-mesh = { workspace = true }
+scenekit-post = { workspace = true, optional = true }
+scenekit-scene = { workspace = true }
+scenekit-texture = { workspace = true }
+serde = { workspace = true, optional = true }
+wgpu = { workspace = true }
+
+[dev-dependencies]
+pollster = { workspace = true }
+serde_json = { workspace = true }
+winit = { workspace = true }
+
+[[bench]]
+name = "render_bench"
+path = "../../benches/render_bench.rs"
+harness = false
+
+[[test]]
+name = "renderer"
+path = "../../tests/renderer.rs"
+
+[[test]]
+name = "renderer_gpu"
+path = "../../tests/renderer_gpu.rs"

@@ -1,0 +1,29 @@
+[package]
+name = "scenekit-core"
+description = "Shared IDs, colors, errors, and traits for the scenekit rendering library."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = ["scenekit-math/std"]
+serde = ["dep:serde", "scenekit-math/serde"]
+gpu = ["dep:bytemuck"]
+inspector = []
+
+[dependencies]
+bytemuck = { workspace = true, optional = true }
+scenekit-math = { workspace = true }
+serde = { workspace = true, optional = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[[test]]
+name = "core_serde"
+path = "../../tests/core_serde.rs"

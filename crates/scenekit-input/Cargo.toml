@@ -1,0 +1,19 @@
+[package]
+name = "scenekit-input"
+description = "Platform-agnostic input state types for scenekit."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = ["scenekit-math/std"]
+serde = ["dep:serde", "scenekit-math/serde"]
+
+[dependencies]
+scenekit-math = { workspace = true }
+serde = { workspace = true, optional = true }

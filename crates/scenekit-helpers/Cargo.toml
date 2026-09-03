@@ -1,0 +1,50 @@
+[package]
+name = "scenekit-helpers"
+description = "CPU-side debug line helpers for scenekit scenes, cameras, lights, and bounds."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = [
+    "scenekit-camera/std",
+    "scenekit-core/std",
+    "scenekit-light/std",
+    "scenekit-math/std",
+    "scenekit-scene/std",
+]
+serde = [
+    "dep:serde",
+    "scenekit-camera/serde",
+    "scenekit-core/serde",
+    "scenekit-light/serde",
+    "scenekit-math/serde",
+    "scenekit-scene/serde",
+]
+egui = ["std", "dep:egui", "scenekit-core/inspector"]
+
+[dependencies]
+scenekit-camera = { workspace = true }
+scenekit-core = { workspace = true }
+scenekit-light = { workspace = true }
+scenekit-math = { workspace = true }
+scenekit-scene = { workspace = true }
+serde = { workspace = true, optional = true }
+egui = { workspace = true, optional = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[[bench]]
+name = "helpers_bench"
+path = "../../benches/helpers_bench.rs"
+harness = false
+
+[[test]]
+name = "helpers"
+path = "../../tests/helpers.rs"

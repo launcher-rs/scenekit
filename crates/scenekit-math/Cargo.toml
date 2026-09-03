@@ -1,0 +1,27 @@
+[package]
+name = "scenekit-math"
+description = "Custom no_std 3D math primitives for the scenekit rendering library."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = []
+libm = ["dep:libm"]
+serde = ["dep:serde"]
+approx = ["dep:approx"]
+
+[dependencies]
+approx = { workspace = true, optional = true }
+libm = { workspace = true, optional = true }
+serde = { workspace = true, optional = true }
+
+[[bench]]
+name = "math_bench"
+path = "../../benches/math_bench.rs"
+harness = false

@@ -1,0 +1,60 @@
+[package]
+name = "scenekit-animato"
+description = "Animato bridge and clip-based animation runtime for scenekit scenes, cameras, materials, lights, morphs, and skeleton poses."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+
+[features]
+default = ["std"]
+std = [
+    "animato/std",
+    "scenekit-camera/std",
+    "scenekit-core/std",
+    "scenekit-light/std",
+    "scenekit-material/std",
+    "scenekit-math/std",
+    "scenekit-scene/std",
+]
+serde = [
+    "dep:serde",
+    "animato/serde",
+    "scenekit-camera/serde",
+    "scenekit-core/serde",
+    "scenekit-light/serde",
+    "scenekit-material/serde",
+    "scenekit-math/serde",
+    "scenekit-scene/serde",
+]
+inspector = ["scenekit-core/inspector"]
+
+[dependencies]
+animato = { workspace = true, features = ["spring", "tween"] }
+scenekit-camera = { workspace = true }
+scenekit-core = { workspace = true }
+scenekit-light = { workspace = true }
+scenekit-material = { workspace = true }
+scenekit-math = { workspace = true }
+scenekit-scene = { workspace = true }
+serde = { workspace = true, optional = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[[bench]]
+name = "animato_bridge_bench"
+path = "../../benches/animato_bridge_bench.rs"
+harness = false
+
+[[bench]]
+name = "animation_mixer_bench"
+path = "../../benches/animation_mixer_bench.rs"
+harness = false
+
+[[test]]
+name = "animato_bridge"
+path = "../../tests/animato_bridge.rs"
