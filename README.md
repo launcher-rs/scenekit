@@ -2,7 +2,7 @@
 
 > 模块化的 Rust 原生 3D 场景框架，适用于原生和 WASM 应用。
 
-[![CI](https://github.com/scenekit/scenekit/actions/workflows/ci.yml/badge.svg)](https://github.com/scenekit/scenekit/actions)
+[![CI](https://github.com/launcher-rs/scenekit/actions/workflows/ci.yml/badge.svg)](https://github.com/launcher-rs/scenekit/actions)
 
 **版本 0.1.0** - 基于 [scenix](https://github.com/AarambhDevHub/scenix) 修改。
 
