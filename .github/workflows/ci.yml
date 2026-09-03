@@ -46,6 +46,23 @@ jobs:
       - name: Bench compile
         run: cargo bench --workspace --no-run
 
+  wasm:
+    name: WASM check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check scenekit-wasm on wasm32
+        run: cargo check -p scenekit-wasm --target wasm32-unknown-unknown --all-features
+
   test:
     name: Test (${{ matrix.rust }})
     runs-on: ubuntu-latest

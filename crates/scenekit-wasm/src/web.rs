@@ -4,13 +4,12 @@ use js_sys::{Float32Array, Reflect, Uint16Array};
 use scenekit_animato::ScalarTrack;
 use scenekit_camera::{OrbitController, PerspectiveCamera};
 use scenekit_core::{Color, Inspectable, LightId, MaterialId, MeshId, NodeId, ScenixError};
-use scenekit_helpers::{AxesHelper, BoundingBoxHelper, GridHelper, LineGeometry};
 use scenekit_input::{GamepadId, InputState, TouchId, ViewportMetrics};
 use scenekit_light::{DirectionalLight, PointLight};
 use scenekit_material::{
     LambertMaterial, PbrMaterial, PhysicalMaterial, ToonMaterial, UnlitMaterial, WireframeMaterial,
 };
-use scenekit_math::{Aabb, Quat, Transform, Vec2, Vec3};
+use scenekit_math::{Transform, Vec2, Vec3};
 use scenekit_mesh::{Geometry, box_geometry, plane_geometry, sphere_geometry, torus_geometry};
 use scenekit_raycaster::Raycaster;
 use scenekit_renderer::{Renderer, RendererConfig, wgpu};
@@ -31,6 +30,7 @@ const OBJECT_LAYER: u32 = 1;
 const HELPER_LAYER: u32 = 2;
 
 #[derive(Clone, Debug)]
+#[allow(dead_code)]
 struct DemoObject {
     node_id: NodeId,
     material_id: MaterialId,
@@ -49,7 +49,6 @@ struct LabRuntime {
     helper_node: NodeId,
     animated_node: NodeId,
     pulse_track: ScalarTrack,
-    pulse_forward: bool,
     last_timestamp_ms: Option<f64>,
     fps: f32,
     paused: bool,
@@ -398,6 +397,46 @@ impl WebGlBackendContext {
             Self::WebGl1(gl) => gl.get_uniform_location(program, name),
         }
     }
+
+    fn tex_image_2d_with_u8(
+        &self,
+        target: u32,
+        level: i32,
+        internal_format: i32,
+        width: i32,
+        height: i32,
+        border: i32,
+        format: u32,
+        type_: u32,
+        pixels: Option<&[u8]>,
+    ) -> Result<(), JsValue> {
+        match self {
+            Self::WebGl2(gl) => gl
+                .tex_image_2d_with_i32_and_i32_and_i32_and_format_and_type_and_opt_u8_array(
+                    target,
+                    level,
+                    internal_format,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type_,
+                    pixels,
+                ),
+            Self::WebGl1(gl) => gl
+                .tex_image_2d_with_i32_and_i32_and_i32_and_format_and_type_and_opt_u8_array(
+                    target,
+                    level,
+                    internal_format,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type_,
+                    pixels,
+                ),
+        }
+    }
 }
 
 /// 首选浏览器渲染后端。
@@ -516,19 +555,30 @@ impl LabRuntime {
                 .layer(OBJECT_LAYER),
         );
 
-        let mut helper_group = SceneNode::group("Helpers").layer(HELPER_LAYER);
-        let axes = helper_group.add(
-            SceneNode::helper("Axes", helper_mesh, helper_id)
-                .transform(Transform::from_scale(Vec3::splat(0.35))),
-        );
-        let grid = helper_group.add(
-            SceneNode::helper("Grid", helper_mesh, helper_id)
-                .transform(Transform::from_translation(Vec3::new(0.0, -0.02, 0.0))),
-        );
-        let bbox = helper_group.add(SceneNode::helper("BoundingBox", helper_mesh, helper_id));
+        let helper_group = SceneNode::group("Helpers").layer(HELPER_LAYER);
         let helper_node = scene.add(helper_group);
+        let _axes = scene
+            .add_child(
+                helper_node,
+                SceneNode::mesh("Axes", helper_mesh, helper_id)
+                    .transform(Transform::from_scale(Vec3::new(0.35, 0.35, 0.35))),
+            )
+            .unwrap();
+        let _grid = scene
+            .add_child(
+                helper_node,
+                SceneNode::mesh("Grid", helper_mesh, helper_id)
+                    .transform(Transform::from_translation(Vec3::new(0.0, -0.02, 0.0))),
+            )
+            .unwrap();
+        let _bbox = scene
+            .add_child(
+                helper_node,
+                SceneNode::mesh("BoundingBox", helper_mesh, helper_id),
+            )
+            .unwrap();
 
-        let mut objects = vec![
+        let objects = vec![
             DemoObject {
                 node_id: cube,
                 material_id: pbr_id,
@@ -554,8 +604,10 @@ impl LabRuntime {
         camera.aspect = width as f32 / height.max(1) as f32;
         orbit.apply_to_perspective(&mut camera);
 
-        let mut input = InputState::new();
-        input.viewport = ViewportMetrics::new(Vec2::new(width as f32, height as f32), 1.0);
+        let input = InputState::new(ViewportMetrics::new(
+            Vec2::new(width as f32, height as f32),
+            1.0,
+        ));
 
         let pulse_track = ScalarTrack::tween(0.0, 1.0, 1.8);
 
@@ -570,7 +622,6 @@ impl LabRuntime {
             helper_node,
             animated_node: torus,
             pulse_track,
-            pulse_forward: true,
             last_timestamp_ms: None,
             fps: 0.0,
             paused: false,
@@ -599,6 +650,18 @@ impl LabRuntime {
             self.orbit.apply_to_perspective(&mut self.camera);
             let frames = (dt * 1000.0).max(1.0);
             self.fps = self.fps * 0.95 + (1000.0 / frames) * 0.05;
+        }
+    }
+
+    fn animate_lab(&mut self, dt: f32) {
+        self.pulse_track.update(dt);
+        let s = self.pulse_track.value();
+        let scale = 0.9 + 0.1 * s;
+        if let Some(node) = self.scene.get_mut(self.animated_node) {
+            node.transform = node.transform.scale_by(Vec3::new(scale, scale, scale));
+        }
+        if self.pulse_track.is_complete() {
+            self.pulse_track = ScalarTrack::tween(0.0, 1.0, 1.8);
         }
     }
 
@@ -818,6 +881,13 @@ impl LabRuntime {
         self.selected_distance = 0.0;
         self.selected_name = String::from("None");
         self.active_material = String::from("None");
+    }
+
+    fn active_feature_flags(&self) -> String {
+        format!(
+            "backend=wgpu, helpers={}, wireframe={}, bloom={}, ssao={}, textures=true, materials=true, lights=true, raycaster=true, animato=true",
+            self.helpers_visible, self.wireframe_enabled, self.bloom_enabled, self.ssao_enabled,
+        )
     }
 }
 
@@ -1174,33 +1244,37 @@ fn helper_geometry() -> Geometry {
     let mut positions = Vec::new();
     let mut colors = Vec::new();
 
-    // axes
     let axis_len = 2.0f32;
     let x_color = Color::from_hex(0xFF4444);
     let y_color = Color::from_hex(0x44FF44);
     let z_color = Color::from_hex(0x4444FF);
 
-    positions.extend_from_slice(&[
-        0.0, 0.0, 0.0, axis_len, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, axis_len, 0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, axis_len,
-    ]);
-    colors.extend_from_slice(&[
-        x_color.r, x_color.g, x_color.b, x_color.a, x_color.r, x_color.g, x_color.b, x_color.a,
-        y_color.r, y_color.g, y_color.b, y_color.a, y_color.r, y_color.g, y_color.b, y_color.a,
-        z_color.r, z_color.g, z_color.b, z_color.a, z_color.r, z_color.g, z_color.b, z_color.a,
-    ]);
+    positions.push(Vec3::new(0.0, 0.0, 0.0));
+    positions.push(Vec3::new(axis_len, 0.0, 0.0));
+    colors.push(x_color);
+    colors.push(x_color);
 
-    // grid
+    positions.push(Vec3::new(0.0, 0.0, 0.0));
+    positions.push(Vec3::new(0.0, axis_len, 0.0));
+    colors.push(y_color);
+    colors.push(y_color);
+
+    positions.push(Vec3::new(0.0, 0.0, 0.0));
+    positions.push(Vec3::new(0.0, 0.0, axis_len));
+    colors.push(z_color);
+    colors.push(z_color);
+
     let grid_color = Color::from_hex(0x556677);
     let grid_half = 3.0f32;
     let grid_step = 0.5f32;
     let mut t = -grid_half;
     while t <= grid_half + 0.001 {
-        positions.extend_from_slice(&[
-            t, 0.0, -grid_half, t, 0.0, grid_half, -grid_half, 0.0, t, grid_half, 0.0, t,
-        ]);
-        for _ in 0..8 {
-            colors.extend_from_slice(&[grid_color.r, grid_color.g, grid_color.b, grid_color.a]);
+        positions.push(Vec3::new(t, 0.0, -grid_half));
+        positions.push(Vec3::new(t, 0.0, grid_half));
+        positions.push(Vec3::new(-grid_half, 0.0, t));
+        positions.push(Vec3::new(grid_half, 0.0, t));
+        for _ in 0..4 {
+            colors.push(grid_color);
         }
         t += grid_step;
     }
@@ -1209,22 +1283,21 @@ fn helper_geometry() -> Geometry {
         positions,
         normals: Vec::new(),
         uvs: Vec::new(),
+        uvs2: Vec::new(),
         colors,
         indices: Vec::new(),
+        tangents: Vec::new(),
     }
 }
 
 fn default_orbit() -> OrbitController {
-    OrbitController {
-        distance: 5.0,
-        yaw: 0.4,
-        pitch: 0.35,
-        target: Vec3::new(0.0, 0.3, 0.0),
-        sensitivity: 0.005,
-        zoom_speed: 0.12,
-        damping: 0.92,
-        ..Default::default()
-    }
+    let mut orbit = OrbitController::new(Vec3::new(0.0, 0.3, 0.0), 5.0);
+    orbit.theta = 0.4;
+    orbit.phi = 0.35;
+    orbit.rotate_sensitivity = 0.005;
+    orbit.zoom_sensitivity = 0.12;
+    orbit.damping = 0.92;
+    orbit
 }
 
 #[wasm_bindgen]
@@ -1233,11 +1306,10 @@ impl WebRenderer {
     pub async fn new(canvas: HtmlCanvasElement) -> Result<WebRenderer, JsValue> {
         crate::set_panic_hook();
         let (width, height) = canvas_size(&canvas);
-        let config = RendererConfig {
-            power_preference: wgpu::PowerPreference::HighPerformance,
-            ..Default::default()
-        };
-        let renderer = Renderer::new_with_canvas(canvas, config).await?;
+        let config = RendererConfig::new(width, height);
+        let mut renderer = Renderer::new(wgpu::SurfaceTarget::Canvas(canvas), config)
+            .await
+            .map_err(js_error)?;
         let lab = generated_lab(&mut renderer, width, height)?;
         Ok(Self { renderer, lab })
     }
@@ -1245,7 +1317,9 @@ impl WebRenderer {
     /// 渲染一帧。`timestamp_ms` 应来自 `requestAnimationFrame`。
     pub fn tick(&mut self, timestamp_ms: f64) -> Result<(), JsValue> {
         self.lab.tick(timestamp_ms);
-        self.renderer.tick(timestamp_ms);
+        self.renderer
+            .render(&self.lab.scene, &self.lab.camera)
+            .map_err(js_error)?;
         Ok(())
     }
 
@@ -1253,7 +1327,7 @@ impl WebRenderer {
     pub fn resize(&mut self, width: u32, height: u32) -> Result<(), JsValue> {
         let (width, height) = clamp_canvas_size(width, height);
         self.lab.resize(width, height);
-        self.renderer.resize(width, height);
+        self.renderer.resize(width, height).map_err(js_error)?;
         Ok(())
     }
 
@@ -1273,8 +1347,8 @@ impl WebRenderer {
             button,
             x,
             y,
-            self.renderer.width().max(1) as f32,
-            self.renderer.height().max(1) as f32,
+            self.renderer.config().width.max(1) as f32,
+            self.renderer.config().height.max(1) as f32,
         );
     }
 
