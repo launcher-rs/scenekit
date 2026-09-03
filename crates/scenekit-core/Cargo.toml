@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-core"
-description = "Shared IDs, colors, errors, and traits for the scenekit rendering library."
+description = "scenekit 渲染库的共享 ID、颜色、错误和 trait。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

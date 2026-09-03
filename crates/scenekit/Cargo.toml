@@ -1,6 +1,6 @@
 [package]
 name = "scenekit"
-description = "Facade crate for the scenekit Renderer APIs."
+description = "scenekit 渲染器 API 的门面 crate。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

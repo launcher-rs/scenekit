@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-renderer"
-description = "wgpu renderer, GPU scene upload, passes, and frame orchestration for scenekit."
+description = "scenekit 的 wgpu 渲染器、GPU 场景上传、渲染通道和帧编排。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

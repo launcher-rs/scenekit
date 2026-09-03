@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-texture"
-description = "CPU-side texture data, samplers, atlases, and mipmap helpers for scenekit."
+description = "scenekit 的 CPU 端纹理数据、采样器、图集和 mipmap 辅助工具。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

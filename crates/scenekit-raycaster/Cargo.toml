@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-raycaster"
-description = "CPU-side BVH raycasting and scene picking for scenekit."
+description = "scenekit 的 CPU 端 BVH 光线投射和场景拾取。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

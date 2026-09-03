@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-animato"
-description = "Animato bridge and clip-based animation runtime for scenekit scenes, cameras, materials, lights, morphs, and skeleton poses."
+description = "scenekit 场景、相机、材质、光源、变形和骨骼姿态的 Animato 桥接和基于剪辑的动画运行时。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

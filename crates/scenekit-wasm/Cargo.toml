@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-wasm"
-description = "Browser/WASM renderer wrapper and DOM input helpers for scenekit."
+description = "scenekit 的浏览器/WASM 渲染器封装和 DOM 输入辅助工具。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

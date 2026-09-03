@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-scene"
-description = "GPU-free scene graph, nodes, transforms, fog, sprites, and LOD helpers for scenekit."
+description = "scenekit 的无 GPU 场景图、节点、变换、雾、精灵和 LOD 辅助工具。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

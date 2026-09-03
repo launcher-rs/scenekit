@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-camera"
-description = "GPU-free camera, frustum, and controller types for scenekit."
+description = "scenekit 的无 GPU 相机、视锥体和控制器类型。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

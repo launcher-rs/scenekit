@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-mesh"
-description = "CPU-side geometry, mesh, primitive, morph, instancing, and batching types for scenekit."
+description = "scenekit 的 CPU 端几何体、网格、图元、变形、实例化和批处理类型。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

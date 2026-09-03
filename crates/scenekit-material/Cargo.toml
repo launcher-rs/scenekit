@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-material"
-description = "GPU-free material traits, pipeline keys, and built-in material types for scenekit."
+description = "scenekit 的无 GPU 材质 trait、管线键和内置材质类型。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

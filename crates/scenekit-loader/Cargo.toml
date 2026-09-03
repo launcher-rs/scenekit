@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-loader"
-description = "CPU-side asset loaders for glTF, OBJ, STL, image, KTX2, and HDR data."
+description = "scenekit 的 CPU 端资产加载器，支持 glTF、OBJ、STL、图像、KTX2 和 HDR 数据。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

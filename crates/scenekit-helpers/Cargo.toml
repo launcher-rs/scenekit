@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-helpers"
-description = "CPU-side debug line helpers for scenekit scenes, cameras, lights, and bounds."
+description = "scenekit 场景、相机、光源和包围盒的 CPU 端调试线段辅助工具。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

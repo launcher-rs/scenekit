@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-light"
-description = "GPU-free light types, shadow configuration, and light probes for scenekit."
+description = "scenekit 的无 GPU 光源类型、阴影配置和光照探针。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

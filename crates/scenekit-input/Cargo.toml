@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-input"
-description = "Platform-agnostic input state types for scenekit."
+description = "scenekit 的平台无关输入状态类型。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

@@ -1,6 +1,6 @@
 [package]
 name = "scenekit-math"
-description = "Custom no_std 3D math primitives for the scenekit rendering library."
+description = "scenekit 渲染库的自定义无 std 3D 数学原语。"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
