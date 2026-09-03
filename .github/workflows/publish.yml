@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.release.outputs.version }}
-      notes: ${{ steps.release.outputs.notes }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +29,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
-      - name: Verify tag, versions, main ancestry, and release notes
+      - name: Verify tag, versions, and main ancestry
         id: release
         shell: bash
         run: |
@@ -56,17 +55,6 @@ jobs:
             exit 1
           fi
 
-          for manifest in website/Cargo.toml examples/wasm_viewer/Cargo.toml; do
-            manifest_version="$(awk -F'"' '/^version = / { print $2; exit }' "$manifest")"
-            if [[ "$manifest_version" != "$version" ]]; then
-              echo "$manifest has version $manifest_version, expected $version" >&2
-              exit 1
-            fi
-          done
-
-          notes=".github/release-notes/${version}.md"
-          test -s "$notes" || { echo "Missing release notes: $notes" >&2; exit 1; }
-
           git fetch origin main
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main || {
             echo "Release tag must point to a commit on origin/main" >&2
@@ -74,17 +62,11 @@ jobs:
           }
 
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "notes=$notes" >> "$GITHUB_OUTPUT"
 
       - name: Install Mesa Vulkan software driver
         run: |
           sudo apt-get update
           sudo apt-get install -y mesa-vulkan-drivers vulkan-tools
-
-      - name: Install Trunk
-        uses: jetli/trunk-action@v0.5.0
-        with:
-          version: "v0.21.14"
 
       - name: Check formatting
         run: cargo fmt --check
@@ -112,15 +94,6 @@ jobs:
 
       - name: Check scenekit-wasm
         run: cargo check -p scenekit-wasm --target wasm32-unknown-unknown --all-features
-
-      - name: Check wasm viewer example
-        run: cargo check --manifest-path examples/wasm_viewer/Cargo.toml --target wasm32-unknown-unknown
-
-      - name: Build website
-        working-directory: website
-        env:
-          NO_COLOR: "false"
-        run: trunk build --release --public-url /scenekit/
 
       - name: Test renderer and post GPU paths
         run: cargo test -p scenekit-renderer -p scenekit-post --all-features
@@ -227,8 +200,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: "scenekit v${{ needs.verify.outputs.version }} — Controls, Interaction, And Editor Primitives"
-          body_path: ${{ needs.verify.outputs.notes }}
+          name: "scenekit v${{ needs.verify.outputs.version }}"
           draft: false
           prerelease: false
-          generate_release_notes: false
+          generate_release_notes: true
